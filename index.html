@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DentaCloud - Dental Clinic Management System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    /* LOGIN SCREEN */
+    .login-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .login-box {
+      background: white;
+      padding: 50px;
+      border-radius: 15px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-box h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+
+    .login-box p {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    .error-message {
+      background: #fee;
+      color: #c33;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .success-message {
+      background: #efe;
+      color: #3c3;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    /* DASHBOARD */
+    .dashboard {
+      display: none;
+      min-height: 100vh;
+      background: #f5f5f5;
+    }
+
+    .navbar {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar h2 {
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .navbar button {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .navbar button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .content {
+      padding: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .tab-btn {
+      padding: 12px 24px;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      font-size: 16px;
+      color: #666;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .tab-btn.active {
+      color: #667eea;
+      border-bottom-color: #667eea;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* PATIENT REGISTRATION FORM */
+    .form-container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+    }
+
+    .form-container h3 {
+      color: #333;
+      margin-bottom: 24px;
+      font-size: 20px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-row.full {
+      grid-template-columns: 1fr;
+    }
+
+    .form-group button {
+      grid-column: span 2;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .form-group button:hover {
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group button {
+        grid-column: span 1;
+      }
+
+      .login-box {
+        padding: 30px;
+      }
+
+      .navbar {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+
+    /* PATIENT LIST */
+    .patients-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .search-bar {
+      padding: 20px;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-bar input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .search-bar button {
+      padding: 10px 20px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: #f5f5f5;
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+      color: #333;
+      border-bottom: 2px solid #e0e0e0;
+    }
+
+    td {
+      padding: 15px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tr:hover {
+      background: #fafafa;
+    }
+
+    .patient-id {
+      color: #667eea;
+      font-weight: 600;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status-active {
+      background: #e7f5e7;
+      color: #2d7a2d;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen" class="login-container">
+    <div class="login-box">
+      <h1>🦷 DentaCloud</h1>
+      <p>Dental Clinic Management System</p>
+      <div id="loginError" class="error-message" style="display: none;"></div>
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required placeholder="staff@clinic.com">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="login-btn">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="dashboard">
+    <div class="navbar">
+      <h2>🦷 DentaCloud Dashboard</h2>
+      <div>
+        <span id="staffName" style="margin-right: 20px;"></span>
+        <button onclick="handleLogout()">Logout</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('patients')">Patients</button>
+        <button class="tab-btn" onclick="switchTab('register')">Register Patient</button>
+      </div>
+
+      <!-- PATIENTS LIST TAB -->
+      <div id="patients" class="tab-content active">
+        <div class="patients-container">
+          <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search by name, phone, or Patient ID...">
+            <button onclick="searchPatients()">Search</button>
+          </div>
+          <div id="patientsList"></div>
+        </div>
+      </div>
+
+      <!-- REGISTER PATIENT TAB -->
+      <div id="register" class="tab-content">
+        <div class="form-container">
+          <h3>Register New Patient</h3>
+          <div id="registerError" class="error-message" style="display: none;"></div>
+          <div id="registerSuccess" class="success-message" style="display: none;"></div>
+          <form id="registerForm" onsubmit="handleRegisterPatient(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name *</label>
+                <input type="text" id="firstName" required>
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phone">Phone *</label>
+                <input type="tel" id="phone" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email2">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age">
+              </div>
+              <div class="form-group">
+                <label for="bloodGroup">Blood Group</label>
+                <input type="text" id="bloodGroup" placeholder="e.g., O+">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="gender">Gender</label>
+                <input type="text" id="gender" placeholder="Male/Female/Other">
+              </div>
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city">
+              </div>
+            </div>
+
+            <div class="form-row full">
+              <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <button type="submit">Register Patient</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'http://localhost:3000';
+    let authToken = localStorage.getItem('token');
+
+    // Check if already logged in
+    if (authToken) {
+      verifyToken();
+    }
+
+    // LOGIN HANDLER
+    async function handleLogin(event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const errorDiv = document.getElementById('loginError');
+
+      try {
+        errorDiv.style.display = 'none';
+        const response = await fetch(`${API_URL}/api/staff/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          authToken = data.token;
+          localStorage.setItem('token', authToken);
+          localStorage.setItem('staff', JSON.stringify(data.staff));
+          showDashboard();
+          loadPatients();
+        } else {
+          errorDiv.textContent = data.message || 'Login failed';
+          errorDiv.style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        errorDiv.textContent = 'Server error. Please check your connection.';
+        errorDiv.style.display = 'block';
+      }
+    }
+
+    // VERIFY TOKEN
+    async function verifyToken() {
+      try {
+        const response = await fetch(`${API_URL}/api/staff/verify`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showDashboard();
+          loadPatients();
+        } else {
+          localStorage.removeItem('token');
+          authToken = null;
+        }
+      } catch (error) {
+        console.error('Token verification error:', error);
+        localStorage.removeItem('token');
+        authToken = null;
+      }
+    }
+
+    // SHOW DASHBOARD
+    function showDashboard() {
+      const staff = JSON.parse(localStorage.getItem('staff'));
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      document.getElementById('staffName').textContent = `Welcome, ${staff.name} (${staff.role})`;
+    }
+
+    // LOGOUT
+    function handleLogout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('staff');
+      authToken = null;
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('loginForm').reset();
+    }
+
+    // SWITCH TABS
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      document.getElementById(tabName).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // LOAD PATIENTS
+    async function loadPatients(search = '') {
+      const patientsList = document.getElementById('patientsList');
+      patientsList.innerHTML = '<div class="loading"><div class="spinner"></div> Loading patients...</div>';
+
+      try {
+        const url = search 
+          ? `${API_URL}/api/patients?search=${encodeURIComponent(search)}`
+          : `${API_URL}/api/patients`;
+
+        const response = await fetch(url, {
+          headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        const data = await response.json();
+
+        if (data.success && data.data.length > 0) {
+          let html = '<table>';
+          html += '<thead><tr><th>Patient ID</th><th>Name</th><th>Phone</th><th>Age</th><th>Blood Group</th><th>Registered</th></tr></thead><tbody>';
+
+          data.data.forEach(patient => {
+            const registered = new Date(patient.created_at).toLocaleDateString();
+            html += `
+              <tr>
+                <td><span class="patient-id">${patient.patient_id}</span></td>
+                <td>${patient.first_name} ${patient.last_name || ''}</td>
+                <td>${patient.phone}</td>
+                <td>${patient.age || '-'}</td>
+                <td>${patient.blood_group || '-'}</td>
+                <td>${registered}</td>
+              </tr>
+            `;
+          });
+
+          html += '</tbody></table>';
+          patientsList.innerHTML = html;
+        } else {
+          patientsList.innerHTML = '<div class="loading">No patients found</div>';
+        }
+      } catch (error) {
+        console.error('Load patients error:', error);
+        patientsList.innerHTML = '<div class="loading">Error loading patients</div>';
+      }
+    }
+
+    // SEARCH PATIENTS
+    function searchPatients() {
+      const searchTerm = document.getElementById('searchInput').value;
+      loadPatients(searchTerm);
+    }
+
+    // REGISTER PATIENT
+    async function handleRegisterPatient(event) {
+      event.preventDefault();
+
+      const patient = {
+        first_name: document.getElementById('firstName').value,
+        last_name: document.getElementById('lastName').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email2').value,
+        age: parseInt(document.getElementById('age').value) || null,
+        blood_group: document.getElementById('bloodGroup').value,
+        gender: document.getElementById('gender').value,
+        city: document.getElementById('city').value,
+        address: document.getElementById('address').value
+      };
+
+      const errorDiv = document.getElementById('registerError');
+      const successDiv = document.getElementById('registerSuccess');
+
+      try {
+        errorDiv.style.display = 'none';
+        successDiv.style.display = 'none';
+
+        const response = await fetch(`${API_URL}/api/patients`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(patient)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          successDiv.textContent = `Patient registered successfully! ID: ${data.patient.patient_id}`;
+          successDiv.style.display = 'block';
+          document.getElementById('registerForm').reset();
+          setTimeout(() => {
+            loadPatients();
+            switchTab('patients');
+          }, 2000);
+        } else {
+          errorDiv.textContent = data.message || 'Registration failed';
+          errorDiv.style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        errorDiv.textContent = 'Server error. Please try again.';
+        errorDiv.style.display = 'block';
+      }
+    }
+
+    // Enter key for search
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            searchPatients();
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
