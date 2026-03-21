@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentaCloud - Register Patient</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>🦷 DentaCloud</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="patient-search.html" class="nav-link">Patients</a>
+                <a href="patient-form.html" class="nav-link active">New Patient</a>
+                <a href="billing.html" class="nav-link">Billing</a>
+                <a href="#" class="nav-link logout" onclick="handleLogout()">Logout</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <h1>Register New Patient</h1>
+            </header>
+
+            <div class="form-container">
+                <form id="patientForm" onsubmit="handlePatientSubmit(event)">
+                    <div class="form-section">
+                        <h2>Personal Information</h2>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" placeholder="+91-9123456789" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dob">Date of Birth</label>
+                                <input type="date" id="dob">
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select id="gender">
+                                    <option value="">Select</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2>Address Information</h2>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="address">Address Line 1</label>
+                                <input type="text" id="address">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" id="city">
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <input type="text" id="state">
+                            </div>
+                            <div class="form-group">
+                                <label for="postal">Postal Code</label>
+                                <input type="text" id="postal">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2>Emergency Contact</h2>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="emergencyName">Contact Person Name</label>
+                                <input type="text" id="emergencyName">
+                            </div>
+                            <div class="form-group">
+                                <label for="emergencyPhone">Contact Person Phone</label>
+                                <input type="tel" id="emergencyPhone">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">✅ Register Patient</button>
+                        <a href="patient-search.html" class="btn btn-secondary">❌ Cancel</a>
+                    </div>
+                </form>
+
+                <div id="successMessage" class="success-message" style="display:none;">
+                    ✅ Patient registered successfully!
+                </div>
+                <div id="errorMessage" class="error-message" style="display:none;"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

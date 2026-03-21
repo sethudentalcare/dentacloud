@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentaCloud - Search Patients</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>🦷 DentaCloud</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="patient-search.html" class="nav-link active">Patients</a>
+                <a href="patient-form.html" class="nav-link">New Patient</a>
+                <a href="billing.html" class="nav-link">Billing</a>
+                <a href="#" class="nav-link logout" onclick="handleLogout()">Logout</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <h1>Search Patients</h1>
+            </header>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search by name, phone, or patient ID..."
+                        onkeyup="handleSearch()"
+                    >
+                    <select id="searchType" onchange="handleSearch()">
+                        <option value="name">By Name</option>
+                        <option value="phone">By Phone</option>
+                        <option value="id">By Patient ID</option>
+                    </select>
+                </div>
+
+                <div id="searchResults">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTable">
+                            <tr>
+                                <td colspan="5" style="text-align: center;">Enter search query...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
