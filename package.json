@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "DentaCloud API",
   "main": "backend/server.js",
+
+  "engines": {
+    "node": "24.x"
+  },
+
   "scripts": {
     "start": "node backend/server.js",
     "dev": "nodemon backend/server.js"
