@@ -9,11 +9,10 @@ export default function handler(req, res) {
     return;
   }
 
-  return res.json({
+  res.json({
     status: 'ok',
     message: 'DentaCloud API is running',
     timestamp: new Date().toISOString(),
-    version: '1.0.0',
-    endpoint: '/health'
+    version: '1.0.0'
   });
 }
