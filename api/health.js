@@ -1,4 +1,4 @@
-export default function handler(req, res) {
+module.exports = (req, res) => {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -9,11 +9,11 @@ export default function handler(req, res) {
     return;
   }
 
-  return res.json({
+  res.status(200).json({
     status: 'ok',
     message: 'DentaCloud API is running',
     timestamp: new Date().toISOString(),
     version: '1.0.0',
-    endpoint: '/health'
+    endpoint: '/api/health'
   });
-}
+};
